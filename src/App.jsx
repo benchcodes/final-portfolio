@@ -1,6 +1,7 @@
 import Header from './components/Header'
 import Profile from './components/Profile'
 import NameSection from './components/NameSection'
+import AboutMe from './components/AboutMe'
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
@@ -16,6 +17,7 @@ function App() {
         <Profile />
         <NameSection />
       </div>
+      <AboutMe />
     </>
   )
 }
