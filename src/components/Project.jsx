@@ -18,7 +18,7 @@ function Project() {
     },
     {
       image: "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?w=800&h=600&fit=crop",
-      title: "Creative Portfolio",
+      title: "Zodiac Prophecy",
       description: "A stunning portfolio website for a creative agency featuring smooth animations and interactive galleries.",
       tags: ["React", "Motion", "Three.js", "GSAP"],
       codeLink: "#",
@@ -42,14 +42,14 @@ function Project() {
           {projects.map((project, index) => (
             <div
               key={index}
-              className="bg-slate-50 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+              className="bg-slate-50 rounded-xl overflow-hidden shadow-sm hover:shadow-xl hover:scale-105 transition-transform transition-shadow duration-300 cursor-pointer"
             >
               {/* Project Image */}
               <div className="h-48 overflow-hidden">
                 <img
                   src={project.image}
                   alt={project.title}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
                 />
               </div>
 

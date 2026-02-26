@@ -25,7 +25,7 @@ function Contact() {
               </div>
               <div>
                 <p className="text-sm text-slate-500">Email</p>
-                <p className="text-slate-900 font-medium">hello@johndoe.com</p>
+                <p className="text-slate-900 font-medium">culubongbenchmatthew@gmail.com</p>
               </div>
             </div>
 
@@ -38,7 +38,7 @@ function Contact() {
               </div>
               <div>
                 <p className="text-sm text-slate-500">Phone</p>
-                <p className="text-slate-900 font-medium">+1 (555) 123-4567</p>
+                <p className="text-slate-900 font-medium">09817454414</p>
               </div>
             </div>
 
@@ -52,7 +52,7 @@ function Contact() {
               </div>
               <div>
                 <p className="text-sm text-slate-500">Location</p>
-                <p className="text-slate-900 font-medium">San Francisco, CA</p>
+                <p className="text-slate-900 font-medium">Municipality of Pateros, Philippines</p>
               </div>
             </div>
 

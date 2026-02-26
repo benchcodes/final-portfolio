@@ -16,14 +16,19 @@ function App() {
   return (
     <>
       <Header />
-      <div className="flex flex-col items-center justify-center py-16 bg-linear-to-b from-slate-50 to-slate-100">
+      <div id="home" className="flex flex-col items-center justify-center py-16 pt-32 bg-linear-to-b from-slate-50 to-slate-100">
         <Profile />
         <NameSection />
       </div>
-      <AboutMe />
-      <Skills />
-      <Project />
-      <Contact />
+      <div id="about">
+        <AboutMe />
+      </div>
+      <div id="projects">
+        <Project />
+      </div>
+      <div id="contact">
+        <Contact />
+      </div>
     </>
   )
 }
