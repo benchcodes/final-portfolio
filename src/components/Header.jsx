@@ -9,7 +9,7 @@ function Header() {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="shrink-0">
-            <a href="/" className="text-2xl font-bold text-blue-400 hover:text-blue-300 transition">
+            <a href="/" className="text-2xl font-bold text-white-400 hover:text-white-300 transition">
               Bench Culubong
             </a>
           </div>
@@ -18,6 +18,7 @@ function Header() {
           <div className="hidden md:flex space-x-8">
             <a href="#home" className="hover:text-blue-400 transition">Home</a>
             <a href="#about" className="hover:text-blue-400 transition">About</a>
+            <a href="#skills" className="hover:text-blue-400 transition">Skills</a>
             <a href="#projects" className="hover:text-blue-400 transition">Projects</a>
             <a href="#contact" className="hover:text-blue-400 transition">Contact</a>
           </div>
@@ -48,6 +49,7 @@ function Header() {
           <div className="md:hidden pb-4 space-y-2">
             <a href="#home" className="block px-3 py-2 rounded-md hover:bg-slate-800 transition">Home</a>
             <a href="#about" className="block px-3 py-2 rounded-md hover:bg-slate-800 transition">About</a>
+            <a href="#skills" className="block px-3 py-2 rounded-md hover:bg-slate-800 transition">Skills</a>
             <a href="#projects" className="block px-3 py-2 rounded-md hover:bg-slate-800 transition">Projects</a>
             <a href="#contact" className="block px-3 py-2 rounded-md hover:bg-slate-800 transition">Contact</a>
           </div>

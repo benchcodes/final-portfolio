@@ -33,12 +33,12 @@ function Skills() {
   ];
 
   return (
-    <div className="w-full bg-linear-to-b from-slate-50 to-white py-20">
+    <div className="w-full bg-linear-to-b from-slate-900 to-slate-950 py-20">
       <div className="max-w-6xl mx-auto px-8">
         {/* Header */}
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-slate-900 mb-4">Skills & Expertise</h2>
-          <p className="text-lg text-slate-600">
+          <h2 className="mb-4 text-3xl font-bold text-white">Skills & Expertise</h2>
+          <p className="text-lg text-slate-400">
             A diverse skill set that allows me to tackle projects from concept to deployment
           </p>
         </div>
@@ -48,7 +48,7 @@ function Skills() {
           {skillCategories.map((category, index) => (
             <div
               key={index}
-              className="bg-white rounded-xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition-shadow"
+              className="rounded-xl border border-slate-800 bg-slate-900 p-6 shadow-sm transition-shadow hover:border-purple-500/50 hover:shadow-md"
             >
               {/* Icon */}
               <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
@@ -56,19 +56,19 @@ function Skills() {
               </div>
 
               {/* Title */}
-              <h3 className="text-lg font-semibold text-slate-900 mb-2">
+              <h3 className="mb-2 text-lg font-semibold text-white">
                 {category.title}
               </h3>
 
               {/* Subtitle */}
-              <p className="text-sm text-slate-500 mb-4">
+              <p className="mb-4 text-sm text-slate-400">
                 {category.subtitle}
               </p>
 
               {/* Skills List */}
               <ul className="space-y-2">
                 {category.skills.map((skill, skillIndex) => (
-                  <li key={skillIndex} className="flex items-center text-sm text-slate-600">
+                  <li key={skillIndex} className="flex items-center text-sm text-slate-300">
                     <span className="w-1.5 h-1.5 bg-purple-400 rounded-full mr-2"></span>
                     {skill}
                   </li>
