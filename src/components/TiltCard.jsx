@@ -11,6 +11,8 @@ function TiltCard({ as: Element = 'div', className = '', children, ...props }) {
 
     card.style.setProperty('--tilt-x', `${y * -8}deg`)
     card.style.setProperty('--tilt-y', `${x * 8}deg`)
+    card.style.setProperty('--px', x)
+    card.style.setProperty('--py', y)
     card.style.setProperty('--shine-x', `${(x + 0.5) * 100}%`)
     card.style.setProperty('--shine-y', `${(y + 0.5) * 100}%`)
   }
@@ -18,6 +20,8 @@ function TiltCard({ as: Element = 'div', className = '', children, ...props }) {
   function resetTilt(event) {
     event.currentTarget.style.setProperty('--tilt-x', '0deg')
     event.currentTarget.style.setProperty('--tilt-y', '0deg')
+    event.currentTarget.style.setProperty('--px', '0')
+    event.currentTarget.style.setProperty('--py', '0')
   }
 
   return (

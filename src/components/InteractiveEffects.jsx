@@ -11,6 +11,12 @@ function InteractiveEffects() {
     }
 
     const updatePointer = (event) => {
+      const x = (event.clientX / window.innerWidth - 0.5) * 2
+      const y = (event.clientY / window.innerHeight - 0.5) * 2
+      document.documentElement.style.setProperty('--mx', x)
+      document.documentElement.style.setProperty('--my', y)
+      document.documentElement.style.setProperty('--glow-x', `${(x + 1) * 50}%`)
+      document.documentElement.style.setProperty('--glow-y', `${(y + 1) * 50}%`)
       setPointer({
         x: (event.clientX / window.innerWidth) * 100,
         y: (event.clientY / window.innerHeight) * 100,

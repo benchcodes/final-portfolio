@@ -1,0 +1,157 @@
+/* Pointer variables: --mx/--my are page coordinates, --px/--py are card coordinates. */
+
+.scroll-progress {
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: none;
+}
+
+.pointer-glow {
+  left: 0;
+  top: 0;
+  transition: none;
+  transform: translate3d(var(--glow-x, 50%), var(--glow-y, 20%), 0) translate(-50%, -50%);
+  will-change: transform;
+}
+
+.scroll-reveal-visible {
+  transform: none;
+}
+
+.atmosphere-section {
+  background-attachment: scroll, scroll;
+}
+
+@media (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .tilt-card {
+    --px: 0;
+    --py: 0;
+    transform: perspective(1000px) rotateX(calc(var(--py) * -9deg)) rotateY(calc(var(--px) * 9deg));
+    transition: border-color 300ms ease, box-shadow 300ms ease, background-color 300ms ease;
+  }
+
+  .tilt-card::after {
+    transform: translateZ(40px);
+  }
+
+  .skill-card {
+    overflow: visible;
+  }
+
+  .tilt-layer {
+    transform: translateZ(var(--z, 0px));
+  }
+
+  .project-featured .project-featured-image {
+    transform: translateZ(28px);
+    box-shadow: 0 1rem 2.2rem rgb(0 0 0 / 0.5);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .profile-scene {
+    transform-style: preserve-3d;
+    isolation: auto;
+  }
+
+  .profile-frame {
+    transform: rotateX(calc(var(--my, 0) * -9deg)) rotateY(calc(var(--mx, 0) * 11deg));
+  }
+
+  .profile-orbit-inner {
+    animation: orbit-inner 14s linear infinite;
+  }
+
+  .profile-orbit-outer {
+    animation: orbit-outer 22s linear infinite;
+  }
+
+  .profile-status {
+    translate: 0 0 56px;
+  }
+
+  .profile-aura {
+    translate: 0 0 -60px;
+  }
+
+  .hero-orb-one {
+    translate: calc(var(--mx, 0) * -36px) calc(var(--my, 0) * -24px);
+  }
+
+  .hero-orb-two {
+    translate: calc(var(--mx, 0) * 44px) calc(var(--my, 0) * 28px);
+  }
+
+  .hero-grid {
+    inset: auto 0 0;
+    height: 68%;
+    opacity: 0.32;
+    transform-origin: 50% 100%;
+    transform: perspective(520px) rotateX(64deg) scale(2.2);
+    mask-image: linear-gradient(to top, #000 8%, transparent 80%);
+    animation: floor-fly 5s linear infinite;
+  }
+}
+
+@keyframes orbit-inner {
+  from { transform: rotateX(68deg) rotateZ(-22deg); }
+  to { transform: rotateX(68deg) rotateZ(338deg); }
+}
+
+@keyframes orbit-outer {
+  from { transform: rotateX(68deg) rotateZ(388deg); }
+  to { transform: rotateX(68deg) rotateZ(28deg); }
+}
+
+@keyframes floor-fly {
+  to { background-position: 0 3.5rem, 0 0; }
+}
+
+@media (min-width: 641px) and (prefers-reduced-motion: no-preference) {
+  .project-stage {
+    perspective: 1400px;
+    padding-block: 1.25rem;
+  }
+
+  .project-preview {
+    box-shadow: 0 1.5rem 3rem rgb(0 0 0 / 0.6);
+    transition: opacity 400ms ease, transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .project-preview-left {
+    transform-origin: 100% 50%;
+    transform: translateZ(-160px) rotateY(34deg);
+  }
+
+  .project-preview-right {
+    transform-origin: 0 50%;
+    transform: translateZ(-160px) rotateY(-34deg);
+  }
+
+  .project-preview-left:hover {
+    transform: translateZ(-110px) rotateY(24deg);
+  }
+
+  .project-preview-right:hover {
+    transform: translateZ(-110px) rotateY(-24deg);
+  }
+}
+
+.portrait-canvas {
+  top: 50%;
+  left: 50%;
+  width: 260%;
+  transform: translate(-50%, -50%) translateZ(-90px);
+  mask-image: radial-gradient(circle closest-side, #000 72%, transparent 100%);
+}
+
+.portrait-canvas canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.profile-scene:has(.portrait-canvas) .profile-orbit {
+  display: none;
+}

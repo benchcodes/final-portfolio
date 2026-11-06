@@ -958,6 +958,20 @@ section,
   perspective: 900px;
 }
 
+.portrait-canvas {
+  position: absolute;
+  z-index: -1;
+  width: min(34rem, 160vw);
+  aspect-ratio: 1;
+  pointer-events: none;
+}
+
+.portrait-canvas canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
 .profile-frame {
   z-index: 1;
   background: conic-gradient(from var(--portrait-angle, 0deg), #67e8f9, #818cf8, #d8b4fe, #a78bfa, #67e8f9);
