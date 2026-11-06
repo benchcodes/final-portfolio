@@ -2,13 +2,12 @@ import portfolioContent from '../data/portfolioContent'
 
 function Profile() {
   return (
-    <div className="profile-float relative">
-      <div
-        aria-hidden="true"
-        className="absolute -inset-3 rounded-full bg-linear-to-br from-blue-400 via-indigo-400 to-purple-500 opacity-25 blur-xl"
-      />
-      <div className="relative rounded-full bg-linear-to-br from-blue-400 via-indigo-400 to-purple-500 p-1.5 shadow-2xl shadow-indigo-200/70">
-        <div className="relative overflow-hidden rounded-full bg-black p-1">
+    <div className="profile-float profile-scene relative" aria-label="Profile portrait">
+      <div className="profile-orbit profile-orbit-outer" aria-hidden="true" />
+      <div className="profile-orbit profile-orbit-inner" aria-hidden="true" />
+      <div aria-hidden="true" className="profile-aura absolute -inset-8 rounded-full" />
+      <div className="profile-frame relative rounded-full p-[3px]">
+        <div className="profile-frame-inner relative overflow-hidden rounded-full p-1">
           <img
             src={portfolioContent.profilePhoto}
             alt={portfolioContent.name}
@@ -16,6 +15,7 @@ function Profile() {
           />
         </div>
       </div>
+      <div className="profile-status" aria-hidden="true"><span /> Available for opportunities</div>
     </div>
   )
 }

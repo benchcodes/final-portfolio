@@ -1,24 +1,64 @@
-# React + Vite
+# Bench Matthew Culubong - Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A responsive personal portfolio built with React, Vite, Tailwind CSS, and custom CSS animations. It showcases profile information, skills, projects, awards, and contact details.
 
-Currently, two official plugins are available:
+## Requirements
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Node.js
+- npm
 
-## React Compiler
+## Getting started
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Install dependencies:
 
-## Expanding the ESLint configuration
+```bash
+npm install
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Start the local development server:
 
-## Pag-edit ng portfolio
+```bash
+npm run dev
+```
 
-Patakbuhin ang `npm run dev`, pagkatapos buksan ang `http://localhost:5173/admin`. Gamitin ang form para baguhin ang profile, About, skills, projects, awards, contact details, at photos. Pindutin ang **Save changes** para maisulat ang updates sa project files.
+Open the URL shown by Vite, usually `http://localhost:5173`.
 
-Tumatanggap ang photo uploader ng JPG, PNG, WebP, at GIF hanggang 8 MB. Maaari ka ring mag-paste ng image URL sa path field. Nasa `src/data/portfolioContent.json` ang saved content; nasa `public/images` ang mga in-upload na larawan.
+## Available commands
 
-Pagkatapos mag-save, i-deploy ang site para makita ng lahat ang updates. Pang-local development ang editor button; para makapag-edit ng live site mula sa browser, kailangan pang ikonekta ang hosted CMS o backend.
+| Command | Description |
+| --- | --- |
+| `npm run dev` | Start the Vite development server |
+| `npm run build` | Create a production build in `dist` |
+| `npm run preview` | Preview the production build locally |
+| `npm run lint` | Check JavaScript and JSX with ESLint |
+| `npm test` | Run lint checks and the production build |
+
+## Updating portfolio content
+
+The portfolio content is stored in [`src/data/portfolioContent.json`](./src/data/portfolioContent.json). Update this file to change:
+
+- Name, role, introduction, and About text
+- Skills and projects
+- Awards
+- Contact details
+- Profile and project image paths
+
+### Local portfolio editor
+
+When the development server is running, open [`http://localhost:5173/admin`](http://localhost:5173/admin) to use the local editor. It can update profile information, About text, skills, projects, awards, contact details, and images.
+
+The image uploader accepts JPG, PNG, WebP, and GIF files up to 8 MB. Uploaded images are saved in `public/images`, while content changes are written to `src/data/portfolioContent.json`.
+
+The editor is intended for local development only. It writes files through a Vite development-server plugin and is not a hosted CMS. Do not expose the development server publicly or deploy the editor endpoints as a production editing system without adding authentication and a backend.
+
+## Production deployment
+
+Build the site:
+
+```bash
+npm run build
+```
+
+Deploy the generated `dist` directory to a static hosting provider such as GitHub Pages, Netlify, or Vercel. Run `npm test` before deploying to catch lint and build failures.
+
+For live content editing, connect the portfolio to a hosted CMS or authenticated backend instead of using the local editor.
