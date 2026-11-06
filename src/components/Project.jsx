@@ -1,106 +1,95 @@
+import { useEffect, useState } from 'react'
+import TiltCard from './TiltCard'
+import portfolioContent from '../data/portfolioContent'
+
 function Project() {
-  const projects = [
-    {
-      image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=600&fit=crop",
-      title: "Parking ni Benjo",
-      description: "A full-featured e-commerce platform with real-time inventory management, payment processing, and analytics dashboard.",
-      tags: ["React", "Node.js", "PostgreSQL", "Stripe"],
-      codeLink: "#",
-      demoLink: "#"
-    },
-    {
-      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop",
-      title: "Chapi",
-      description: "Collaborative task management tool with real-time updates, team workspaces, and productivity analytics.",
-      tags: ["Next.js", "TypeScript", "Supabase", "Tailwind"],
-      codeLink: "#",
-      demoLink: "#"
-    },
-    {
-      image: "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?w=800&h=600&fit=crop",
-      title: "Zodiac Prophecy",
-      description: "A stunning portfolio website for a creative agency featuring smooth animations and interactive galleries.",
-      tags: ["React", "Motion", "Three.js", "GSAP"],
-      codeLink: "#",
-      demoLink: "#"
+  const projects = portfolioContent.projects.items
+
+  const [activeIndex, setActiveIndex] = useState(0)
+  const [direction, setDirection] = useState('next')
+  const activeProject = projects[activeIndex]
+  const previousProject = projects[(activeIndex - 1 + projects.length) % projects.length]
+  const nextProject = projects[(activeIndex + 1) % projects.length]
+
+  function showPrevious() {
+    setDirection('previous')
+    setActiveIndex((index) => (index - 1 + projects.length) % projects.length)
+  }
+
+  function showNext() {
+    setDirection('next')
+    setActiveIndex((index) => (index + 1) % projects.length)
+  }
+
+  useEffect(() => {
+    function handleKeyDown(event) {
+      if (event.key === 'ArrowLeft') {
+        setDirection('previous')
+        setActiveIndex((index) => (index - 1 + projects.length) % projects.length)
+      }
+      if (event.key === 'ArrowRight') {
+        setDirection('next')
+        setActiveIndex((index) => (index + 1) % projects.length)
+      }
     }
-  ];
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [projects.length])
 
   return (
-    <div className="w-full bg-slate-950 py-20">
-      <div className="max-w-6xl mx-auto px-8">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h2 className="mb-4 text-3xl font-bold text-white">Featured Projects</h2>
-          <p className="text-lg text-slate-400">
-            A selection of my recent work and personal projects
-          </p>
+    <div className="atmosphere-section projects-gallery w-full overflow-hidden bg-black py-24">
+      <div className="mx-auto max-w-7xl px-6 sm:px-8">
+        <div className="mb-10 flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
+          <div>
+            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.3em] text-purple-300">{portfolioContent.projects.kicker}</p>
+            <h2 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">{portfolioContent.projects.title}</h2>
+            <p className="mt-4 max-w-xl text-sm leading-relaxed text-slate-400 sm:text-base">
+              {portfolioContent.projects.description}
+            </p>
+          </div>
+          <a href={portfolioContent.projects.moreLink} className="w-fit rounded-lg bg-white px-5 py-3 text-sm font-semibold text-black transition hover:bg-purple-200 focus:outline-none focus:ring-2 focus:ring-purple-300">
+            {portfolioContent.projects.moreLabel} <span aria-hidden="true">↗</span>
+          </a>
         </div>
 
-        {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {projects.map((project, index) => (
-            <div
-              key={index}
-              className="cursor-pointer overflow-hidden rounded-xl border border-slate-800 bg-slate-900 shadow-sm transition-transform transition-shadow duration-300 hover:scale-105 hover:border-purple-500/50 hover:shadow-xl"
-            >
-              {/* Project Image */}
-              <div className="h-48 overflow-hidden">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
-                />
+        <div className="project-carousel" aria-roledescription="carousel" aria-label="Featured projects">
+          <div key={activeIndex} className={`project-stage project-slide-${direction}`}>
+            <button type="button" className="project-preview project-preview-left" onClick={showPrevious} aria-label={`View ${previousProject.title}`}>
+              <img src={previousProject.image} alt="" loading="lazy" />
+            </button>
+            <TiltCard as="article" className="project-featured" aria-live="polite">
+              <div className="project-featured-image">
+                <img src={activeProject.image} alt={activeProject.title} />
               </div>
+            </TiltCard>
+            <button type="button" className="project-preview project-preview-right" onClick={showNext} aria-label={`View ${nextProject.title}`}>
+              <img src={nextProject.image} alt="" loading="lazy" />
+            </button>
+          </div>
 
-              {/* Project Content */}
-              <div className="p-6">
-                {/* Title */}
-                <h3 className="mb-2 text-xl font-semibold text-white">
-                  {project.title}
-                </h3>
-
-                {/* Description */}
-                <p className="mb-4 text-sm leading-relaxed text-slate-400">
-                  {project.description}
-                </p>
-
-                {/* Tags */}
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {project.tags.map((tag, tagIndex) => (
-                    <span
-                      key={tagIndex}
-                      className="rounded-full border border-slate-700 bg-slate-800 px-3 py-1 text-xs font-medium text-slate-300"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Buttons */}
-                <div className="flex gap-3">
-                  <a
-                    href={project.codeLink}
-                    className="flex flex-1 items-center justify-center gap-2 rounded-lg border border-slate-700 bg-slate-800 px-4 py-2.5 text-sm font-medium text-slate-300 transition-colors hover:bg-slate-700"
-                  >
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
-                    </svg>
-                    Code
-                  </a>
-                  <a
-                    href={project.demoLink}
-                    className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-medium text-white bg-slate-800 rounded-lg hover:bg-slate-700 transition-colors"
-                  >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                    </svg>
-                    Demo
-                  </a>
-                </div>
-              </div>
+          <div className="project-controls">
+            <div className="project-counter" aria-label={`Project ${activeIndex + 1} of ${projects.length}`}>
+              <span>{String(activeIndex + 1).padStart(2, '0')}</span>
+              <span className="project-counter-line" />
+              <span className="text-slate-500">{String(projects.length).padStart(2, '0')}</span>
             </div>
-          ))}
+            <div className="project-arrows">
+              <button type="button" onClick={showPrevious} aria-label="Previous project">←</button>
+              <button type="button" onClick={showNext} aria-label="Next project">→</button>
+            </div>
+          </div>
+
+          <div key={`details-${activeIndex}`} className={`project-details mx-auto mt-8 max-w-3xl text-center project-slide-${direction}`}>
+            <h3 className="text-2xl font-bold leading-tight text-white sm:text-3xl">{activeProject.title}</h3>
+            <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-slate-400">{activeProject.description}</p>
+            <div className="mt-4 flex flex-wrap justify-center gap-2">
+              {activeProject.tags.map((tag) => <span key={tag} className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-300">{tag}</span>)}
+            </div>
+            <a href={activeProject.link} className="mt-5 inline-block text-sm font-medium text-white underline decoration-white/40 underline-offset-8 transition hover:text-purple-300">
+              View Project <span aria-hidden="true">↗</span>
+            </a>
+          </div>
         </div>
       </div>
     </div>

@@ -1,35 +1,40 @@
 import { useState } from 'react'
+import portfolioContent from '../data/portfolioContent'
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false)
+  const closeMenu = () => setIsOpen(false)
 
   return (
-    <header className="fixed top-0 left-0 right-0 bg-slate-900 text-white shadow-lg z-50">
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+    <header className="site-header fixed inset-x-0 top-0 z-50 px-3 pt-2 text-white sm:px-5">
+      <nav className={`site-nav-shell mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 ${isOpen ? 'site-nav-shell-open' : ''}`}>
+        <div className="site-nav-row flex h-11 items-center justify-between">
           {/* Logo */}
           <div className="shrink-0">
-            <a href="/" className="text-2xl font-bold text-white-400 hover:text-white-300 transition">
-              Bench Culubong
+            <a href="#home" onClick={closeMenu} className="site-logo font-mono text-xs font-medium tracking-[0.16em] text-slate-400 sm:text-sm">
+              {portfolioContent.brand}
             </a>
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex space-x-8">
-            <a href="#home" className="hover:text-blue-400 transition">Home</a>
-            <a href="#about" className="hover:text-blue-400 transition">About</a>
-            <a href="#skills" className="hover:text-blue-400 transition">Skills</a>
-            <a href="#projects" className="hover:text-blue-400 transition">Projects</a>
-            <a href="#contact" className="hover:text-blue-400 transition">Contact</a>
+          <div className="site-nav hidden items-center gap-6 md:flex lg:gap-8">
+            <a href="#home" className="site-nav-link">Home</a>
+            <a href="#about" className="site-nav-link">About</a>
+            <a href="#projects" className="site-nav-link">Portfolio</a>
+            <a href="#awards" className="site-nav-link">Awards</a>
+            <a href="#contact" className="site-nav-link">Contact</a>
           </div>
 
           {/* Mobile menu button */}
           <button
+            type="button"
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden inline-flex items-center justify-center p-2 rounded-md hover:bg-slate-800 transition"
+            aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
+            aria-expanded={isOpen}
+            className="menu-toggle inline-flex items-center justify-center rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-purple-400 md:hidden"
           >
             <svg
-              className="h-6 w-6"
+              className={`h-6 w-6 menu-icon ${isOpen ? 'menu-icon-open' : ''}`}
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -45,15 +50,19 @@ function Header() {
         </div>
 
         {/* Mobile Navigation */}
-        {isOpen && (
-          <div className="md:hidden pb-4 space-y-2">
-            <a href="#home" className="block px-3 py-2 rounded-md hover:bg-slate-800 transition">Home</a>
-            <a href="#about" className="block px-3 py-2 rounded-md hover:bg-slate-800 transition">About</a>
-            <a href="#skills" className="block px-3 py-2 rounded-md hover:bg-slate-800 transition">Skills</a>
-            <a href="#projects" className="block px-3 py-2 rounded-md hover:bg-slate-800 transition">Projects</a>
-            <a href="#contact" className="block px-3 py-2 rounded-md hover:bg-slate-800 transition">Contact</a>
+        <div
+          className={`mobile-nav ${isOpen ? 'mobile-nav-open' : ''} md:hidden`}
+          aria-hidden={!isOpen}
+          inert={!isOpen}
+        >
+          <div className="mobile-nav-inner">
+            <a href="#home" onClick={closeMenu} className="mobile-nav-link">Home</a>
+            <a href="#about" onClick={closeMenu} className="mobile-nav-link">About</a>
+            <a href="#projects" onClick={closeMenu} className="mobile-nav-link">Portfolio</a>
+            <a href="#awards" onClick={closeMenu} className="mobile-nav-link">Awards</a>
+            <a href="#contact" onClick={closeMenu} className="mobile-nav-link">Contact</a>
           </div>
-        )}
+        </div>
       </nav>
     </header>
   )

@@ -1,0 +1,136 @@
+{
+  "brand": "Bench Culubong",
+  "name": "Bench Matthew Culubong",
+  "role": "Software Developer",
+  "profilePhoto": "/images/profile.jpg",
+  "intro": "I build responsive, user-focused web experiences with modern technologies and thoughtful interface design.",
+  "about": {
+    "title": "About Me",
+    "paragraphs": [
+      "I'm a passionate software developer with a keen interest in building meaningful web applications. With expertise in modern web technologies, I strive to create clean, efficient, and user-friendly solutions.",
+      "I believe in continuous learning and staying updated with the latest industry trends and best practices. When I'm not coding, you can find me exploring new technologies or contributing to open-source projects."
+    ]
+  },
+  "skillsSection": {
+    "title": "Skills & Expertise",
+    "description": "A diverse skill set that allows me to tackle projects from concept to deployment"
+  },
+  "skills": [
+    {
+      "icon": "code",
+      "title": "Frontend Development",
+      "subtitle": "React, TypeScript, Next.js, Tailwind CSS, MySQL",
+      "skills": [
+        "React & Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Motion animations"
+      ]
+    },
+    {
+      "icon": "database",
+      "title": "Backend Development",
+      "subtitle": "Node.js, Python, PostgreSQL",
+      "skills": [
+        "Node.js & Express",
+        "Python & Django",
+        "PostgreSQL",
+        "REST & GraphQL APIs"
+      ]
+    },
+    {
+      "icon": "design",
+      "title": "UI/UX Design",
+      "subtitle": "Figma, Adobe Photoshop, Framer, Canva",
+      "skills": [
+        "Figma & Adobe Photoshop",
+        "Framer",
+        "Prototyping",
+        "Design Systems"
+      ]
+    }
+  ],
+  "projects": {
+    "kicker": "Selected work",
+    "title": "Work Gallery",
+    "description": "A collection of systems, digital projects, and technical work I've built.",
+    "moreLabel": "View More Projects",
+    "moreLink": "#contact",
+    "items": [
+      {
+        "image": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1000&h=560&fit=crop",
+        "title": "Parkingan ni Benjo",
+        "description": "A full-featured e-commerce platform with real-time inventory management, payment processing, and analytics dashboard.",
+        "tags": [
+          "React",
+          "Node.js",
+          "PostgreSQL",
+          "Stripe"
+        ],
+        "link": "#contact"
+      },
+      {
+        "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1000&h=560&fit=crop",
+        "title": "Chapi",
+        "description": "Collaborative task management tool with real-time updates, team workspaces, and productivity analytics.",
+        "tags": [
+          "Next.js",
+          "TypeScript",
+          "Supabase",
+          "Tailwind"
+        ],
+        "link": "#contact"
+      },
+      {
+        "image": "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?w=1000&h=560&fit=crop",
+        "title": "Zodiac Prophecy",
+        "description": "A portfolio website for a creative agency featuring smooth animations and interactive galleries.",
+        "tags": [
+          "React",
+          "Motion",
+          "Three.js",
+          "GSAP"
+        ],
+        "link": "#contact"
+      }
+    ]
+  },
+  "awards": {
+    "kicker": "Recognition",
+    "title": "Awards & Achievements",
+    "description": "A collection of academic and professional recognitions that reflect my dedication to excellence.",
+    "photos": [
+      "/images/1793940495842-1gqhkh-cool-xbox-profile-pictures-9dtcc745il694rjs.jpg",
+      "https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=700&h=900&fit=crop",
+      "https://images.unsplash.com/photo-1564981797816-1043664bf78d?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1531482615713-2afd69097998?w=700&h=900&fit=crop"
+    ],
+    "items": [
+      {
+        "title": "Dean's Lister",
+        "category": "Academic recognition",
+        "detail": "Recognized for consistent academic excellence and outstanding performance.",
+        "icon": "✦"
+      },
+      {
+        "title": "Best Capstone Paper",
+        "category": "Research award",
+        "detail": "Awarded for the quality, clarity, and practical value of the capstone research.",
+        "icon": "♜"
+      },
+      {
+        "title": "Best Capstone System",
+        "category": "Technical award",
+        "detail": "Recognized for delivering an innovative and reliable software system.",
+        "icon": "⌘"
+      }
+    ]
+  },
+  "contact": {
+    "email": "culubongbenchmatthew@gmail.com",
+    "phone": "09817454414",
+    "phoneLink": "+639817454414",
+    "location": "Municipality of Pateros, Philippines"
+  }
+}

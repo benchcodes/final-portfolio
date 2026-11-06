@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 
 function ScrollReveal({ children, className = '' }) {
-  const [isVisible, setIsVisible] = useState(false)
+  const [isVisible, setIsVisible] = useState(() =>
+    typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  )
   const elementRef = useRef(null)
 
   useEffect(() => {
@@ -9,10 +11,7 @@ function ScrollReveal({ children, className = '' }) {
 
     if (!element) return undefined
 
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-
-    if (prefersReducedMotion) {
-      setIsVisible(true)
+    if (isVisible) {
       return undefined
     }
 
@@ -29,7 +28,7 @@ function ScrollReveal({ children, className = '' }) {
     observer.observe(element)
 
     return () => observer.disconnect()
-  }, [])
+  }, [isVisible])
 
   return (
     <div
