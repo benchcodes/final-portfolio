@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react'
-import portfolioContent from '../data/portfolioContent'
+import { usePortfolioContent } from '../context/usePortfolioContent'
 
 const PortraitScene = lazy(() => import('./PortraitScene'))
 
@@ -17,6 +17,7 @@ const use3D = typeof window !== 'undefined'
   && webglSupported()
 
 function Profile() {
+  const portfolioContent = usePortfolioContent()
   return (
     <div className="profile-float profile-scene relative" aria-label="Profile portrait">
       {use3D && (

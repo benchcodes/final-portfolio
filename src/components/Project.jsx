@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import TiltCard from './TiltCard'
-import portfolioContent from '../data/portfolioContent'
+import { usePortfolioContent } from '../context/usePortfolioContent'
 
 function Project() {
+  const portfolioContent = usePortfolioContent()
   const projects = portfolioContent.projects.items
 
   const [activeIndex, setActiveIndex] = useState(0)

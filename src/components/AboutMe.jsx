@@ -1,6 +1,7 @@
-import portfolioContent from '../data/portfolioContent'
+import { usePortfolioContent } from '../context/usePortfolioContent'
 
 function AboutMe() {
+  const portfolioContent = usePortfolioContent()
   return (
     <div className="atmosphere-section w-full bg-black py-16">
       <div className="max-w-3xl mx-auto px-8">

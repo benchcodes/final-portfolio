@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
-import portfolioContent from '../data/portfolioContent'
+import { usePortfolioContent } from '../context/usePortfolioContent'
 
 function IntroSplash({ onComplete }) {
+  const portfolioContent = usePortfolioContent()
   const [isLeaving, setIsLeaving] = useState(false)
 
   useEffect(() => {

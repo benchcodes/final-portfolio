@@ -1,7 +1,8 @@
 import { useState } from 'react'
-import portfolioContent from '../data/portfolioContent'
+import { usePortfolioContent } from '../context/usePortfolioContent'
 
 function Header() {
+  const portfolioContent = usePortfolioContent()
   const [isOpen, setIsOpen] = useState(false)
   const closeMenu = () => setIsOpen(false)
 

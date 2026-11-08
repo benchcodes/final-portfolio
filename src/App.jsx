@@ -20,18 +20,7 @@ function App() {
   const currentPath = window.location.pathname.replace(/\/+$/, '') || '/'
 
   if (currentPath === '/admin') {
-    if (import.meta.env.DEV) {
-      return <PortfolioEditor onClose={() => window.location.assign('/')} />
-    }
-
-    return (
-      <main className="grid min-h-screen place-items-center bg-[#08080c] px-6 text-center text-white">
-        <div>
-          <h1 className="text-xl font-semibold">The editor runs locally</h1>
-          <p className="mt-2 max-w-md text-sm text-slate-400">Run <code>npm run dev</code> and open <code>/admin</code> to edit content, then deploy your changes.</p>
-        </div>
-      </main>
-    )
+    return <PortfolioEditor onClose={() => window.location.assign('/')} />
   }
 
   return (

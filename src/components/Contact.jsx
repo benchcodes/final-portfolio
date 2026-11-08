@@ -1,7 +1,8 @@
 import { useState } from 'react'
-import portfolioContent from '../data/portfolioContent'
+import { usePortfolioContent } from '../context/usePortfolioContent'
 
 function Contact() {
+  const portfolioContent = usePortfolioContent()
   const [status, setStatus] = useState('')
   const { contact } = portfolioContent
 

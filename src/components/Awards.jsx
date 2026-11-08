@@ -1,7 +1,8 @@
 import { useState } from 'react'
-import portfolioContent from '../data/portfolioContent'
+import { usePortfolioContent } from '../context/usePortfolioContent'
 
 function Awards() {
+  const portfolioContent = usePortfolioContent()
   const [activeAward, setActiveAward] = useState(0)
   const { awards } = portfolioContent
   const award = awards.items[activeAward]

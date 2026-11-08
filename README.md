@@ -45,11 +45,17 @@ The portfolio content is stored in [`src/data/portfolioContent.json`](./src/data
 
 ### Local portfolio editor
 
-When the development server is running, open [`http://localhost:5173/admin`](http://localhost:5173/admin) to use the local editor. It can update profile information, About text, skills, projects, awards, contact details, and images.
+When the development server is running, open [`http://localhost:5173/admin`](http://localhost:5173/admin) to use the local editor. It can update profile information, About text, skills, projects, awards, contact details, and images. The `/admin` route is also handled by the production SPA rewrite so it shows the local-only editor notice instead of a host-level 404 when visited on the deployed site.
 
 The image uploader accepts JPG, PNG, WebP, and GIF files up to 8 MB. Uploaded images are saved in `public/images`, while content changes are written to `src/data/portfolioContent.json`.
 
-The editor is intended for local development only. It writes files through a Vite development-server plugin and is not a hosted CMS. Do not expose the development server publicly or deploy the editor endpoints as a production editing system without adding authentication and a backend.
+The editor uses Supabase Authentication and Storage in production. The legacy Vite file-writing endpoints remain available for local development only; they are not used by the deployed editor.
+
+### Supabase editor setup
+
+The deployed `/admin` editor uses Supabase Authentication, the `portfolio_content` table, and the `portfolio-images` Storage bucket. Copy `.env.example` to `.env.local` and add the Supabase project URL and publishable anon key. Add the same variables in Vercel under **Settings → Environment Variables**, then redeploy.
+
+Sign in at `/admin` with the Supabase user that was added to the `admin_users` table. The public site reads the saved content from Supabase and temporarily uses the bundled JSON content until a valid database record is available.
 
 ## Production deployment
 

@@ -1,6 +1,7 @@
-import portfolioContent from '../data/portfolioContent'
+import { usePortfolioContent } from '../context/usePortfolioContent'
 
 function NameSection() {
+  const portfolioContent = usePortfolioContent()
   return (
     <div className="hero-copy mt-8 max-w-3xl px-6 text-center">
       <p className="hero-eyebrow mb-4"><span /> Hello, I&apos;m</p>

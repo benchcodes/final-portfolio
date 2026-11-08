@@ -1,5 +1,5 @@
 import TiltCard from './TiltCard'
-import portfolioContent from '../data/portfolioContent'
+import { usePortfolioContent } from '../context/usePortfolioContent'
 
 const skillIcons = {
   code: (
@@ -20,6 +20,7 @@ const skillIcons = {
 }
 
 function Skills() {
+  const portfolioContent = usePortfolioContent()
   return (
     <div className="atmosphere-section w-full bg-linear-to-b from-[#080808] to-black py-20">
       <div className="max-w-6xl mx-auto px-8">

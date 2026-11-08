@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react'
+import { supabase } from '../lib/supabase'
+import fallbackContent from '../data/portfolioContent'
 
 const inputClass = 'mt-1 w-full rounded-lg border border-white/10 bg-black/40 px-3 py-2.5 text-sm text-white outline-none transition focus:border-purple-400/70 focus:ring-2 focus:ring-purple-500/20'
 const buttonClass = 'rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-xs font-medium text-slate-200 transition hover:border-purple-400/40 hover:bg-purple-500/10'
@@ -42,20 +44,15 @@ function ImageField({ label, value, onChange }) {
     setUploading(true)
 
     try {
-      const dataUrl = await new Promise((resolve, reject) => {
-        const reader = new FileReader()
-        reader.onload = () => resolve(reader.result)
-        reader.onerror = () => reject(new Error('Could not read this image.'))
-        reader.readAsDataURL(file)
-      })
-      const response = await fetch('/__portfolio-image', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ fileName: file.name, dataUrl }),
-      })
-      const result = await response.json()
-      if (!response.ok) throw new Error(result.error || 'Image upload failed.')
-      onChange(result.path)
+      if (!supabase) throw new Error('Supabase is not configured.')
+      const extension = file.name.split('.').pop()?.toLowerCase() || 'jpg'
+      const path = `portfolio/${crypto.randomUUID()}.${extension}`
+      const { error: uploadError } = await supabase.storage
+        .from('portfolio-images')
+        .upload(path, file, { contentType: file.type, upsert: false })
+      if (uploadError) throw uploadError
+      const { data } = supabase.storage.from('portfolio-images').getPublicUrl(path)
+      onChange(data.publicUrl)
     } catch (uploadError) {
       setError(uploadError.message)
     } finally {
@@ -95,23 +92,70 @@ function PortfolioEditor({ onClose }) {
   const [draft, setDraft] = useState(null)
   const [status, setStatus] = useState('Loading saved content…')
   const [saving, setSaving] = useState(false)
+  const [session, setSession] = useState(null)
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [signingIn, setSigningIn] = useState(false)
 
   useEffect(() => {
+    if (!supabase) {
+      setStatus('Add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY to use the deployed editor.')
+      return undefined
+    }
+
     let cancelled = false
-    fetch('/__portfolio-content')
-      .then(async (response) => {
-        if (!response.ok) throw new Error('Could not load portfolio content.')
-        return response.json()
-      })
-      .then((content) => {
+    supabase.auth.getSession().then(({ data, error }) => {
+      if (error) {
+        setStatus(error.message)
+        return
+      }
+      if (!cancelled) setSession(data.session)
+    })
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, nextSession) => {
+      if (!cancelled) setSession(nextSession)
+    })
+
+    return () => {
+      cancelled = true
+      listener.subscription.unsubscribe()
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!session) return undefined
+
+    let cancelled = false
+    supabase
+      .from('portfolio_content')
+      .select('content')
+      .eq('id', 1)
+      .single()
+      .then(({ data, error }) => {
         if (cancelled) return
-        setDraft(content)
-        setStatus('Edits are saved to this project when you press Save changes.')
+        if (error) {
+          setStatus(error.message)
+          return
+        }
+        setDraft(data.content?.brand ? data.content : fallbackContent)
+        setStatus('Edits are saved to Supabase when you press Save changes.')
       })
-      .catch((error) => setStatus(error.message))
 
     return () => { cancelled = true }
-  }, [])
+  }, [session])
+
+  async function signIn(event) {
+    event.preventDefault()
+    setSigningIn(true)
+    setStatus('Signing in…')
+    const { error } = await supabase.auth.signInWithPassword({ email, password })
+    setStatus(error ? error.message : 'Signed in.')
+    setSigningIn(false)
+  }
+
+  async function signOut() {
+    const { error } = await supabase.auth.signOut()
+    if (error) setStatus(error.message)
+  }
 
   function update(path, value) {
     setDraft((current) => {
@@ -140,14 +184,11 @@ function PortfolioEditor({ onClose }) {
     setStatus('Saving…')
 
     try {
-      const response = await fetch('/__portfolio-content', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(draft),
-      })
-      const result = await response.json()
-      if (!response.ok) throw new Error(result.error || 'Could not save content.')
-      setStatus('Saved to the project. Reloading the portfolio…')
+      const { error } = await supabase
+        .from('portfolio_content')
+        .upsert({ id: 1, content: draft })
+      if (error) throw error
+      setStatus('Saved to Supabase. Reloading the portfolio…')
       window.setTimeout(() => window.location.reload(), 500)
     } catch (error) {
       setStatus(error.message)
@@ -155,13 +196,29 @@ function PortfolioEditor({ onClose }) {
     }
   }
 
-  if (!draft) {
+  if (!supabase || !session || !draft) {
     return (
       <div className="fixed inset-0 z-[300] overflow-y-auto bg-[#08080c] p-5 text-white sm:p-8" role="dialog" aria-modal="true" aria-label="Portfolio content editor">
         <div className="mx-auto max-w-3xl rounded-2xl border border-white/10 bg-black/50 p-6">
           <button type="button" onClick={onClose} className={buttonClass}>Close editor</button>
-          <p className="mt-5 text-sm text-slate-300" role="status">{status}</p>
-          {status.includes('fetch') && <p className="mt-2 text-xs text-slate-500">Start the project with <code>npm run dev</code> to use the editor.</p>}
+          {!supabase ? (
+            <p className="mt-5 text-sm text-rose-300" role="status">{status}</p>
+          ) : !session ? (
+            <form onSubmit={signIn} className="mt-6 space-y-4">
+              <div>
+                <h1 className="text-xl font-semibold text-white">Admin sign in</h1>
+                <p className="mt-2 text-sm text-slate-400">Use the Supabase account that you added to <code>admin_users</code>.</p>
+              </div>
+              <Field label="Email" value={email} onChange={setEmail} type="email" />
+              <Field label="Password" value={password} onChange={setPassword} type="password" />
+              <button type="submit" disabled={signingIn} className="rounded-lg bg-purple-600 px-4 py-2 text-xs font-semibold text-white disabled:opacity-60">
+                {signingIn ? 'Signing in…' : 'Sign in'}
+              </button>
+              {status !== 'Loading saved content…' && <p className="text-xs text-rose-300" role="status">{status}</p>}
+            </form>
+          ) : (
+            <p className="mt-5 text-sm text-slate-300" role="status">{status}</p>
+          )}
         </div>
       </div>
     )
@@ -177,7 +234,8 @@ function PortfolioEditor({ onClose }) {
               <h1 className="mt-1 text-xl font-bold text-white">Update your content</h1>
             </div>
             <div className="flex items-center gap-2">
-              <button type="button" onClick={onClose} className={buttonClass}>Cancel</button>
+              <button type="button" onClick={signOut} className={buttonClass}>Sign out</button>
+              <button type="button" onClick={onClose} className={buttonClass}>Close</button>
               <button type="submit" disabled={saving} className="rounded-lg bg-purple-600 px-4 py-2 text-xs font-semibold text-white transition hover:bg-purple-500 disabled:cursor-wait disabled:opacity-60">
                 {saving ? 'Saving…' : 'Save changes'}
               </button>
