@@ -88,6 +88,11 @@ function EditorSection({ title, description, children }) {
   )
 }
 
+function parseTags(value) {
+  const tags = value.split(',').map((tag) => tag.trim())
+  return value.endsWith(',') ? tags : tags.filter(Boolean)
+}
+
 function PortfolioEditor({ onClose }) {
   const [draft, setDraft] = useState(null)
   const [status, setStatus] = useState('Loading saved content…')
@@ -184,9 +189,14 @@ function PortfolioEditor({ onClose }) {
     setStatus('Saving…')
 
     try {
+      const contentToSave = structuredClone(draft)
+      contentToSave.projects.items = contentToSave.projects.items.map((project) => ({
+        ...project,
+        tags: project.tags.filter(Boolean),
+      }))
       const { error } = await supabase
         .from('portfolio_content')
-        .upsert({ id: 1, content: draft })
+        .upsert({ id: 1, content: contentToSave })
       if (error) throw error
       setStatus('Saved to Supabase. Reloading the portfolio…')
       window.setTimeout(() => window.location.reload(), 500)
@@ -324,7 +334,7 @@ function PortfolioEditor({ onClose }) {
                     <Field label="Project name" value={project.title} onChange={(value) => update(['projects', 'items', index, 'title'], value)} />
                     <Field label="Project link" value={project.link} onChange={(value) => update(['projects', 'items', index, 'link'], value)} />
                     <Field label="Description" value={project.description} onChange={(value) => update(['projects', 'items', index, 'description'], value)} multiline rows={3} />
-                    <Field label="Tags (comma separated)" value={project.tags.join(', ')} onChange={(value) => update(['projects', 'items', index, 'tags'], value.split(',').map((tag) => tag.trim()).filter(Boolean))} multiline rows={3} />
+                    <Field label="Tags (comma separated)" value={project.tags.join(', ')} onChange={(value) => update(['projects', 'items', index, 'tags'], parseTags(value))} multiline rows={3} />
                   </div>
                 </div>
               ))}
