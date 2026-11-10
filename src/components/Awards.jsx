@@ -21,7 +21,6 @@ function Awards() {
             {awards.photos.map((photo, index) => (
               <img key={`${photo}-${index}`} src={photo} alt={`Award memory ${index + 1}`} loading="lazy" decoding="async" />
             ))}
-            <div className="awards-play" aria-hidden="true">▶</div>
           </div>
 
           <div className="space-y-3">

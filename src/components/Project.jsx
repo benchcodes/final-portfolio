@@ -41,8 +41,8 @@ function Project() {
   return (
     <div className="atmosphere-section projects-gallery w-full overflow-hidden bg-black py-24">
       <div className="mx-auto max-w-7xl px-6 sm:px-8">
-        <div className="mb-10 flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
-          <div>
+        <div className="mb-10 flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
+          <div className="min-w-0">
             <p className="mb-3 text-xs font-semibold uppercase tracking-[0.3em] text-purple-300">{portfolioContent.projects.kicker}</p>
             <h2 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">{portfolioContent.projects.title}</h2>
             <p className="mt-4 max-w-xl text-sm leading-relaxed text-slate-400 sm:text-base">

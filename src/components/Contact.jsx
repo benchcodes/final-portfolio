@@ -1,5 +1,9 @@
-import { useState } from 'react'
+import { lazy, Suspense, useState } from 'react'
 import { usePortfolioContent } from '../context/usePortfolioContent'
+import { canUse3D } from '../lib/canUse3D'
+
+const ContactGlobe = lazy(() => import('./ContactGlobe'))
+const show3D = canUse3D()
 
 function Contact() {
   const portfolioContent = usePortfolioContent()
@@ -21,7 +25,7 @@ function Contact() {
 
   return (
     <div className="atmosphere-section w-full bg-[#080808] py-20">
-      <div className="max-w-6xl mx-auto px-8">
+      <div className="max-w-6xl mx-auto px-5 sm:px-8">
         {/* Header */}
         <div className="text-center mb-12">
           <h2 className="mb-4 text-3xl font-bold text-white">Get In Touch</h2>
@@ -43,9 +47,9 @@ function Contact() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
               </div>
-              <div>
+              <div className="min-w-0">
                 <p className="text-sm text-slate-500">Email</p>
-                <a href={`mailto:${contact.email}`} className="font-medium text-slate-200 transition-colors hover:text-purple-300">
+                <a href={`mailto:${contact.email}`} className="block break-all font-medium text-slate-200 transition-colors hover:text-purple-300">
                   {contact.email}
                 </a>
               </div>
@@ -58,7 +62,7 @@ function Contact() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                 </svg>
               </div>
-              <div>
+              <div className="min-w-0">
                 <p className="text-sm text-slate-500">Phone</p>
                 <a href={`tel:${contact.phoneLink}`} className="font-medium text-slate-200 transition-colors hover:text-purple-300">
                   {contact.phone}
@@ -74,18 +78,29 @@ function Contact() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
               </div>
-              <div>
+              <div className="min-w-0">
                 <p className="text-sm text-slate-500">Location</p>
-                <p className="font-medium text-slate-200">{contact.location}</p>
+                <p className="break-words font-medium text-slate-200">{contact.location}</p>
               </div>
             </div>
 
-            {/* Let's Work Together Card */}
-            <div className="bg-linear-to-r from-purple-700 to-black rounded-xl p-6 text-white">
-              <h4 className="text-xl font-semibold mb-2">Let's Work Together</h4>
-              <p className="text-purple-100 text-sm">
-                I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
-              </p>
+            {/* 3D location globe */}
+            <div className="contact-globe-card">
+              {show3D && (
+                <Suspense fallback={null}>
+                  <ContactGlobe />
+                </Suspense>
+              )}
+              <div className="contact-globe-coordinates" aria-hidden="true">
+                <span className="contact-globe-ping" />
+                14.55°N · 121.07°E
+              </div>
+              <div className="contact-globe-copy">
+                <h4>Let&apos;s work together</h4>
+                <p>
+                  Based in Pateros, Philippines — open to remote work and new projects worldwide.
+                </p>
+              </div>
             </div>
           </div>
 

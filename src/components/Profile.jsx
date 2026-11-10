@@ -1,20 +1,9 @@
 import { lazy, Suspense } from 'react'
 import { usePortfolioContent } from '../context/usePortfolioContent'
+import { canUse3D } from '../lib/canUse3D'
 
 const PortraitScene = lazy(() => import('./PortraitScene'))
-
-function webglSupported() {
-  try {
-    const canvas = document.createElement('canvas')
-    return Boolean(canvas.getContext('webgl2') || canvas.getContext('webgl'))
-  } catch {
-    return false
-  }
-}
-
-const use3D = typeof window !== 'undefined'
-  && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  && webglSupported()
+const use3D = canUse3D()
 
 function Profile() {
   const portfolioContent = usePortfolioContent()
